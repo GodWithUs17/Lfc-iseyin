@@ -1,6 +1,6 @@
 import { STORAGE_KEYS } from '@/config/constants';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://lfc-iseyin.onrender.com';
 
 export async function apiRequest(path, options = {}) {
   const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
