@@ -1,0 +1,120 @@
+{
+  "church": {
+    "name": "Living Faith Church, Iseyin",
+    "address": "Km 3, Oyo-Iseyin Road, Beside LAUTECH Gate, Iseyin, Oyo State",
+    "phone1": "+234 803 123 4567",
+    "phone2": "+234 805 987 6543",
+    "email": "info@lfciseyin.org.ng",
+    "youtube": "https://youtube.com/@winnerschapel",
+    "facebook": "https://facebook.com/lfciseyin"
+  },
+  "live": {
+    "isLive": false,
+    "title": "Understanding the Wonders of Thanksgiving - Part 3",
+    "preacher": "Bishop David O. Oyedepo",
+    "date": "Covenant Day of Thanksgiving Service",
+    "description": "Every thanksgiving secures your future. Join us for an encounter.",
+    "youtubeUrl": "https://youtube.com/watch?v=YOUR_VIDEO_ID",
+    "youtubeId": "dQw4w9WgXcQ",
+    "status": "Next Live: Sunday 7:30AM"
+  },
+  "sermons": [
+    {
+      "id": 1,
+      "title": "Covenant Day of Settlement",
+      "preacher": "Resident Pastor - LFC Iseyin",
+      "date": "14 Sep 2025",
+      "youtubeUrl": "https://youtube.com/watch?v=video1",
+      "thumbnail": "pastor",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "title": "Engaging the Power of Faith",
+      "preacher": "Bishop David O. Oyedepo",
+      "date": "7 Sep 2025",
+      "youtubeUrl": "https://youtube.com/watch?v=video2",
+      "thumbnail": "worship",
+      "featured": false
+    },
+    {
+      "id": 3,
+      "title": "Unveiling Our Breaking Limits Heritage",
+      "preacher": "Bishop David Abioye",
+      "date": "31 Aug 2025",
+      "youtubeUrl": "https://youtube.com/watch?v=video3",
+      "thumbnail": "hero",
+      "featured": false
+    },
+    {
+      "id": 4,
+      "title": "The Wonders of Divine Direction",
+      "preacher": "Resident Pastor",
+      "date": "24 Aug 2025",
+      "youtubeUrl": "https://youtube.com/watch?v=video4",
+      "thumbnail": "worship",
+      "featured": false
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "day": "21",
+      "monthYear": "September • Sunday • 7:30AM",
+      "title": "Covenant Day of Fruitfulness",
+      "description": "Every siege of barrenness is declared broken. Come with your family and invite the barren around you.",
+      "tag": "Main Auditorium • Free",
+      "color": "dark"
+    },
+    {
+      "id": 2,
+      "day": "24",
+      "monthYear": "September • Wednesday • 5PM",
+      "title": "Week of Spiritual Emphasis Begins",
+      "description": "3 days of fasting, Word and Communion. Waiting on the Lord for fresh fire and empowerment.",
+      "tag": "Fasting & Prayer",
+      "color": "red"
+    },
+    {
+      "id": 3,
+      "day": "06",
+      "monthYear": "October • Monday • 9AM",
+      "title": "WOFBI Basic Certificate Course",
+      "description": "Two weeks intensive Bible training. Theme: Building Faith for Exploits. Registration now open at church office.",
+      "tag": "Register at Office • ₦3,000",
+      "color": "dark"
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "tag": "Sunday • Main",
+      "time": "7:30 AM",
+      "title": "First Service - Turnaround Service",
+      "description": "Power-packed praise, undiluted Word and prophetic ministrations for your turnaround encounter.",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "tag": "Sunday • Second",
+      "time": "9:30 AM",
+      "title": "Second Service & Youth Church",
+      "description": "Same grace, more room. Youth Alive Fellowship and Children’s Church run concurrently.",
+      "featured": false
+    },
+    {
+      "id": 3,
+      "tag": "Wednesday • 5PM",
+      "time": "5:00 PM",
+      "title": "Midweek Communion Service",
+      "description": "Midweek recharge with the Word and the mystery of the Holy Communion for renewal.",
+      "featured": false
+    }
+  ],
+  "formSettings": {
+    "formspreeUrl": "",
+    "googleSheetUrl": "",
+    "whatsappNumber": "2348031234567",
+    "adminEmail": "info@lfciseyin.org.ng"
+  }
+}

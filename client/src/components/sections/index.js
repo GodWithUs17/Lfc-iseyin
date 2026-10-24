@@ -1,0 +1,10 @@
+export { default as Hero } from "./Hero";
+export { default as Mandate } from "./Mandate";
+export { default as Pastor } from "./Pastor";
+export { default as Services } from "./Services";
+export { default as Ministries } from "./Ministries";
+export { default as Sermons } from "./Sermons";
+export { default as Events } from "./Events";
+export { default as Location } from "./Location";
+export { default as Giving } from "./Giving";
+export { default as Contact } from "./Contact";
