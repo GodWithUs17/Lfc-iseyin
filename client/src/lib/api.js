@@ -1,6 +1,10 @@
 import { STORAGE_KEYS } from '@/config/constants';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://lfc-iseyin.onrender.com';
+// Automatically points to localhost when running `npm run dev`, 
+// and points to Render when built for Vercel/Production.
+export const API_BASE_URL = import.meta.env.DEV 
+  ? 'http://localhost:5001' 
+  : 'https://lfc-iseyin.onrender.com';
 
 export async function apiRequest(path, options = {}) {
   const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
