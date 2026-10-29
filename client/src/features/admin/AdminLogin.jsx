@@ -2,7 +2,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
-import WinnersLogo from "@/components/brand/WINNER.png";
+import WinnersLogo from "@/components/brand/WINNER.webp";
 
 // Inline SVG Icons
 function EyeIcon({ className = "w-5 h-5" }) {

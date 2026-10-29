@@ -4,7 +4,7 @@
  */
 
 import toast from "react-hot-toast";
-import WinnersLogo from "@/components/brand/WINNER.png";
+import WinnersLogo from "@/components/brand/WINNER.webp";
 import Container from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";

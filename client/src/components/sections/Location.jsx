@@ -1,4 +1,4 @@
-import WinnersLogo from '@/components/brand/WINNER.png';
+import WinnersLogo from '@/components/brand/WINNER.webp';
 
 export default function Location({ data }) {
   const church = data?.church;

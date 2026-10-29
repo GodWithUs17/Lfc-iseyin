@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import WinnersLogoImg from "@/components/brand/WINNER.png";
+import WinnersLogoImg from "@/components/brand/WINNER.webp";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";

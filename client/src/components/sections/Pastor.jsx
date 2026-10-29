@@ -2,8 +2,8 @@
  * Pastor Section - Living Faith Church Iseyin
  * Responsive, data-driven, reusable
  */
-import WinnersLogo from '@/components/brand/WINNER.png';
-import pastorImage from '@/components/brand/ResidentPastor.png';
+import WinnersLogo from '@/components/brand/WINNER.webp';
+import pastorImage from '@/components/brand/ResidentPastor.webp';
 
 export default function Pastor() {
   return (

@@ -1,6 +1,6 @@
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
-import WinnersLogo from "@/components/brand/WINNER.png";
+import WinnersLogo from "@/components/brand/WINNER.webp";
 
 export default function AdminLayout({
   title = "LFC Iseyin",

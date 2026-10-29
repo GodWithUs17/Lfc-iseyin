@@ -2,13 +2,15 @@
  * Ministries Section - Living Faith Church Iseyin
  * Responsive, data-driven, reusable
  */
-import childrenImage from '@/components/brand/children.png';
-import youthImage from '@/components/brand/youthlfc.PNG';
+import childrenImage from '@/components/brand/children.webp';
+import youthImage from '@/components/brand/youthlfc.webp';
+import menImage from '@/components/brand/menWomen.webp';
+
 
 const ministries = [
   { title: "Kingdom Champions", cat: "Children", desc: "Word-based classes for ages 3-12 where children encounter Jesus early.", img: childrenImage },
   { title: "Youth Alive Fellowship", cat: "Youth", desc: "Teenagers and young adults on fire for God - raising giants.", img: youthImage },
-  { title: "Winners Men & Women", cat: "Family", desc: "Empowering families, strengthening marriages and godly homes.", img: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=600&auto=format&fit=crop" },
+  { title: "Winners Men & Women", cat: "Family", desc: "Empowering families, strengthening marriages and godly homes.", img: menImage },
   // { title: "WOFBI & Leadership", cat: "Training", desc: "2 weeks intensive to equip you for supernatural exploits.", img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop" },
   { title: "Evangelism & WSF", cat: "Outreach", desc: "Every Winner is a soul winner. Join outreaches across Iseyin.", img: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=600&auto=format&fit=crop" },
   { title: "Winners Voices Choir", cat: "Music", desc: "Anointed minstrels leading high praises and worship.", img: "https://images.unsplash.com/photo-1514320290767-862d51c16a09?q=80&w=600&auto=format&fit=crop" },
