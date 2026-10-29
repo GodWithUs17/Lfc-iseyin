@@ -1,6 +1,11 @@
+// import { createContext, useState, useEffect } from "react";
+// import fallbackData from "@/data/data.json";
+// import { STORAGE_KEYS } from "@/config/constants";
+
 import { createContext, useState, useEffect } from "react";
 import fallbackData from "@/data/data.json";
 import { STORAGE_KEYS } from "@/config/constants";
+import { apiRequest } from "@/lib/api";
 
 export const SiteDataContext = createContext(null);
 
@@ -58,11 +63,26 @@ async function loadRemoteData() {
   try {
     // Cache-busting timestamp prevents Chrome HTTP cache retention
     const timestamp = Date.now();
-    const [sermonsRes, liveRes, eventsRes] = await Promise.all([
-      fetch(`/api/sermons?t=${timestamp}`, { cache: "no-store", headers: { "Pragma": "no-cache" } }),
-      fetch(`/api/live?t=${timestamp}`, { cache: "no-store", headers: { "Pragma": "no-cache" } }),
-      fetch(`/api/events?t=${timestamp}`, { cache: "no-store", headers: { "Pragma": "no-cache" } }),
-    ]);
+    // const [sermonsRes, liveRes, eventsRes] = await Promise.all([
+    //   fetch(`/api/sermons?t=${timestamp}`, { cache: "no-store", headers: { "Pragma": "no-cache" } }),
+    //   fetch(`/api/live?t=${timestamp}`, { cache: "no-store", headers: { "Pragma": "no-cache" } }),
+    //   fetch(`/api/events?t=${timestamp}`, { cache: "no-store", headers: { "Pragma": "no-cache" } }),
+    // ]);
+   
+ const [sermonsRes, liveRes, eventsRes] = await Promise.all([
+  apiRequest(`/api/sermons?t=${timestamp}`, {
+    cache: "no-store",
+    headers: { Pragma: "no-cache" },
+  }),
+  apiRequest(`/api/live?t=${timestamp}`, {
+    cache: "no-store",
+    headers: { Pragma: "no-cache" },
+  }),
+  apiRequest(`/api/events?t=${timestamp}`, {
+    cache: "no-store",
+    headers: { Pragma: "no-cache" },
+  }),
+]);
 
     const rawSermons = sermonsRes.ok ? await sermonsRes.json() : fallbackData.sermons;
     const sermons = Array.isArray(rawSermons)

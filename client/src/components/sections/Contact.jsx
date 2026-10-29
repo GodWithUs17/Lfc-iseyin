@@ -4,6 +4,7 @@
  */
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { apiRequest } from '@/lib/api';
 
 export default function Contact({ data }) {
   const [status, setStatus] = useState({ show: false, text: '', color: '' });
@@ -38,11 +39,16 @@ export default function Contact({ data }) {
     const whatsapp = data?.formSettings?.whatsappNumber || '2348031234567';
 
     const promises = [
-      fetch('/api/contact', {
+      apiRequest('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         body: JSON.stringify(payload),
-      }).catch(() => {})
+      }).catch((error) => {
+        console.error('Contact API request failed:', error);
+      }),
     ];
 
     if (formspreeUrl) {
