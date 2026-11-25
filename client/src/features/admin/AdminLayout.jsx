@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import WinnersLogo from "@/components/brand/WINNER.webp";
@@ -17,11 +18,33 @@ export default function AdminLayout({
     month: "short",
     day: "numeric",
   });
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        mobileMenuButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const handleMobileTabChange = (nextTab) => {
+    setTab(nextTab);
+    setMobileMenuOpen(false);
+    mobileMenuButtonRef.current?.focus();
+  };
 
   return (
-    <div className="min-h-screen bg-slate-50/60 pb-24 lg:pb-16 text-slate-900 font-sans antialiased">
+    <div className="min-h-screen bg-slate-50/60 pb-8 lg:pb-16 text-slate-900 font-sans antialiased">
       {/* Top Header */}
-      <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
+      <header className="relative bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-xs">
         <Container className="py-3 px-4 sm:px-6 flex justify-between items-center">
           {/* Logo + Title */}
           <div className="flex gap-2.5 sm:gap-3 items-center min-w-0">
@@ -41,7 +64,7 @@ export default function AdminLayout({
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <div className="hidden sm:flex items-center gap-2 sm:gap-4 shrink-0">
             <div className="hidden md:block text-right border-r border-slate-200 pr-4">
               <div className="text-[10px] font-bold tracking-widest uppercase text-slate-400">
                 {todayLabel}
@@ -69,6 +92,24 @@ export default function AdminLayout({
               </Button>
             </div>
           </div>
+
+          <button
+            ref={mobileMenuButtonRef}
+            type="button"
+            className="sm:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-rose-600"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-label={isMobileMenuOpen ? "Close admin menu" : "Open admin menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-admin-menu"
+          >
+            <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </Container>
 
         {/* Desktop/Tablet Tab Bar */}
@@ -94,6 +135,52 @@ export default function AdminLayout({
               })}
             </nav>
           </Container>
+        </div>
+
+        <div
+          id="mobile-admin-menu"
+          className={`${isMobileMenuOpen ? "block" : "hidden"} absolute left-0 right-0 top-full border-t border-slate-200 bg-white shadow-lg sm:hidden`}
+        >
+          <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto p-3">
+            <nav aria-label="Admin navigation" className="grid gap-1">
+              {tabs.map((item) => {
+                const isActive = tab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleMobileTabChange(item.id)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`min-h-11 w-full rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors ${
+                      isActive
+                        ? "bg-rose-50 text-rose-700"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </nav>
+            <div className="mt-3 grid gap-2 border-t border-slate-100 pt-3">
+              <a
+                href="/"
+                className="flex min-h-11 items-center rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+              >
+                View Site
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onLogout?.();
+                }}
+                className="min-h-11 rounded-lg bg-slate-900 px-3 py-2 text-left text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -146,29 +233,6 @@ export default function AdminLayout({
         <main className="animate-in fade-in duration-200">{children}</main>
       </Container>
 
-      {/* Mobile Sticky Navigation Bottom-Bar */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200 z-40 px-2 py-1.5 shadow-lg">
-        <div className="flex items-center justify-around overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-          {tabs.map((item) => {
-            const isActive = tab === item.id;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setTab(item.id)}
-                className={`flex flex-col items-center justify-center min-w-[56px] py-1 px-2 rounded-lg text-[11px] font-bold transition-all ${
-                  isActive
-                    ? "bg-rose-50 text-rose-700"
-                    : "text-slate-500 hover:text-slate-900"
-                }`}
-              >
-                <span className="capitalize">{item.label}</span>
-                {isActive && <span className="w-1 h-1 rounded-full bg-rose-600 mt-0.5" />}
-              </button>
-            );
-          })}
-        </div>
-      </nav>
     </div>
   );
 }

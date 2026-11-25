@@ -67,20 +67,20 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
   });
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
+    <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
       {/* Header & Filter Controls */}
-      <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-red-600">
+          <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-red-600">
             Inbox
           </span>
-          <h3 className="text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
+          <h3 className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
             Prayer & Contact Requests
           </h3>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 bg-slate-200/60 p-1 rounded-xl text-xs font-medium self-start sm:self-auto flex-wrap">
+        <div className="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl text-[11px] sm:text-xs font-medium self-start sm:self-auto flex-wrap">
           {[
             { key: "ALL", label: "All Messages" },
             { key: "PRAYER", label: "Prayer" },
@@ -91,7 +91,7 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
               key={tab.key}
               type="button"
               onClick={() => setFilter(tab.key)}
-              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`px-2 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 filter === tab.key
                   ? "bg-white text-slate-900 shadow-sm font-semibold"
                   : "text-slate-600 hover:text-slate-900"
@@ -119,12 +119,12 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
             return (
               <div
                 key={id}
-                className={`p-6 transition-colors hover:bg-slate-50/80 ${
+                className={`p-3 sm:p-6 transition-colors hover:bg-slate-50/80 ${
                   !isRead ? "bg-slate-50/40" : "bg-white"
                 }`}
               >
                 {/* Top Row: Contact Details + Category Badge */}
-                <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                   <div className="flex items-center gap-3">
                     <span
                       className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
@@ -134,10 +134,10 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
                       }`}
                     />
                     <div>
-                      <h4 className="text-sm font-bold text-slate-900 leading-snug">
+                      <h4 className="text-[13px] sm:text-sm font-bold text-slate-900 leading-snug">
                         {msg.name || "Anonymous"}
                       </h4>
-                      <div className="flex flex-wrap items-center gap-x-3 text-xs text-slate-500 mt-0.5">
+                      <div className="flex flex-wrap items-center gap-x-3 text-[11px] sm:text-xs text-slate-500 mt-0.5">
                         {msg.email ? (
                           <a
                             href={`mailto:${msg.email}`}
@@ -181,7 +181,7 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
                   </div>
 
                   <span
-                    className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${getBadgeStyle(
+                    className={`self-start text-[10px] sm:text-[11px] font-semibold px-2.5 py-1 rounded-full border ${getBadgeStyle(
                       msg.type
                     )}`}
                   >
@@ -191,21 +191,21 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
 
                 {/* Subject & Message Content */}
                 <div className="pl-5 border-l-2 border-slate-200 ml-1 space-y-1">
-                  <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">
                     {msg.type || "Contact Message"}
                   </p>
-                  <p className="text-sm text-slate-700 leading-relaxed">
+                  <p className="text-[13px] sm:text-sm text-slate-700 leading-relaxed">
                     {msg.message || "No message content."}
                   </p>
                 </div>
 
                 {/* Footer Toolbar */}
-                <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-100 text-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-slate-100 text-[11px] sm:text-xs">
                   <span className="text-slate-400">
                     {formatMessageDate(messageDate)}
                   </span>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={() => handleToggleRead(id, msg.status)}

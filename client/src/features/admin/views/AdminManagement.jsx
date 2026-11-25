@@ -1,31 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import Button from "@/components/ui/Button";
-import useAdminData from "../hooks/useAdminData";
 
 export default function AdminManagement({
-  admins: propAdmins,
+  admins = [],
+  adminsError = "",
+  currentUser,
   onAddAdmin,
   onDeleteAdmin,
 }) {
-  // Consume Hook Data & Actions
-  const {
-    admins: hookAdmins = [],
-    createAdmin,
-    deleteAdmin,
-    refreshAdmins,
-    currentUser,
-  } = useAdminData();
-
-  // Load latest admin accounts from backend when this view mounts
-  useEffect(() => {
-    if (refreshAdmins) {
-      refreshAdmins();
-    }
-  }, []);
-
-  // Prefer hook state over passed props
-  const adminList = hookAdmins.length > 0 ? hookAdmins : propAdmins || [];
+  const adminList = admins;
 
   // Local Form State
   const [name, setName] = useState("");
@@ -52,11 +36,10 @@ export default function AdminManagement({
     try {
       setIsSubmitting(true);
 
-      if (createAdmin) {
-        await createAdmin({ name, email, role, password });
-      } else if (onAddAdmin) {
-        await onAddAdmin({ name, email, role, password });
+      if (typeof onAddAdmin !== "function") {
+        throw new Error("Admin account creation is unavailable.");
       }
+      await onAddAdmin({ name, email, role, password });
 
       setFormSuccess(`Account for ${name} created successfully.`);
       setName("");
@@ -123,11 +106,10 @@ export default function AdminManagement({
     }
 
     try {
-      if (deleteAdmin && admin.id) {
-        await deleteAdmin(admin.id);
-      } else if (onDeleteAdmin) {
-        await onDeleteAdmin(targetId);
+      if (!admin.id || typeof onDeleteAdmin !== "function") {
+        throw new Error("Admin account removal is unavailable.");
       }
+      await onDeleteAdmin(admin.id);
       setFormSuccess("Admin account removed successfully.");
       toast.success("Admin account removed successfully.");
     } catch (err) {
@@ -136,18 +118,18 @@ export default function AdminManagement({
   };
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-5 sm:space-y-8 max-w-4xl">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">Admin Team Management</h2>
-        <p className="text-slate-500 text-sm">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Admin Team Management</h2>
+        <p className="text-slate-500 text-xs sm:text-sm">
           Add new church admins or remove access from existing team members.
         </p>
       </div>
 
       {/* Form: Add New Admin */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900 mb-4">Add New Administrator</h3>
+      <div className="bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm">
+        <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4">Add New Administrator</h3>
 
         {formError && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
@@ -221,11 +203,51 @@ export default function AdminManagement({
 
       {/* Table: Existing Admin Accounts */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-slate-900">Current Admins</h3>
+        <div className="p-4 sm:p-6 border-b border-slate-100 flex justify-between items-center">
+          <h3 className="text-base sm:text-lg font-semibold text-slate-900">Current Admins</h3>
           <span className="text-xs text-slate-500 font-medium">{adminList.length} Total</span>
         </div>
-        <div className="overflow-x-auto">
+        <div className="divide-y divide-slate-100 xl:hidden">
+          {adminList.length === 0 ? (
+            <p className={`p-6 text-center text-sm ${hookAdminsError ? "text-red-600" : "text-slate-400"}`}>
+              {adminsError ? `Could not load admin accounts: ${adminsError}` : "No active admin accounts found."}
+            </p>
+          ) : (
+            adminList.map((admin) => {
+              const isCurrent = currentUser?.email === admin.email;
+
+              return (
+                <article key={admin.id || admin.email} className="space-y-2.5 sm:space-y-3 p-3 sm:p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 font-medium text-sm sm:text-base text-slate-900">
+                        <span className="break-words">{admin.name || "Unnamed admin"}</span>
+                        {isCurrent && (
+                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-normal text-slate-600">
+                            You
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 break-all text-[11px] sm:text-xs text-slate-600">{admin.email}</p>
+                    </div>
+                    <span className="shrink-0 rounded-full border border-rose-100 bg-rose-50 px-2.5 py-1 text-[10px] font-semibold uppercase text-rose-700">
+                      {admin.role}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(admin)}
+                    disabled={isCurrent}
+                    className="min-h-9 sm:min-h-10 w-full rounded-lg bg-red-50 px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-red-600 transition-colors hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-30"
+                  >
+                    Remove admin
+                  </button>
+                </article>
+              );
+            })
+          )}
+        </div>
+        <div className="hidden overflow-x-auto xl:block">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-600 font-medium">
               <tr>
@@ -238,8 +260,8 @@ export default function AdminManagement({
             <tbody className="divide-y divide-slate-100">
               {adminList.length === 0 ? (
                 <tr>
-                  <td colSpan="4" className="p-6 text-center text-slate-400">
-                    No active admin accounts found.
+                  <td colSpan="4" className={`p-6 text-center ${hookAdminsError ? "text-red-600" : "text-slate-400"}`}>
+                    {adminsError ? `Could not load admin accounts: ${adminsError}` : "No active admin accounts found."}
                   </td>
                 </tr>
               ) : (

@@ -19,21 +19,21 @@ export default function SermonsTable({ sermons = [], onEdit, onDelete, onCreateN
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
+    <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm overflow-hidden transition-all">
       {/* Header & Add CTA */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:p-6 border-b border-slate-100 bg-slate-50/50">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600">
+          <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-indigo-600">
             Sermons Library
           </span>
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
+          <h3 className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mt-0.5">
             Published Messages
           </h3>
         </div>
         <Button
           size="sm"
           onClick={onCreateNew}
-          className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl shadow-sm transition-all text-xs sm:text-sm self-start sm:self-auto w-full sm:w-auto text-center"
+          className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-4 py-2 rounded-lg sm:rounded-xl shadow-sm transition-all text-xs sm:text-sm self-start sm:self-auto w-auto text-center"
         >
           + Add New Sermon
         </Button>
@@ -53,34 +53,34 @@ export default function SermonsTable({ sermons = [], onEdit, onDelete, onCreateN
       ) : (
         <>
           {/* MOBILE VIEW: Responsive Card Stack (Visible on mobile/tablet up to md breakpoint) */}
-          <div className="divide-y divide-slate-100 md:hidden">
+          <div className="divide-y divide-slate-100 xl:hidden">
             {sermons.map((sermon) => (
-              <div key={sermon.id} className="p-4 sm:p-5 space-y-3 bg-white">
+              <div key={sermon.id} className="p-3 sm:p-5 space-y-2.5 sm:space-y-3 bg-white">
                 {/* Top Row: Category Badge + Date */}
                 <div className="flex items-center justify-between gap-2">
                   <span
-                    className={`inline-flex items-center text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${getCategoryBadge(
+                    className={`inline-flex items-center text-[10px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-full border ${getCategoryBadge(
                       sermon.category
                     )}`}
                   >
                     {sermon.category || "Sunday Service"}
                   </span>
-                  <span className="text-xs text-slate-400 font-medium">
+                  <span className="text-[11px] sm:text-xs text-slate-400 font-medium">
                     {sermon.date || "—"}
                   </span>
                 </div>
 
                 {/* Title & Series */}
                 <div>
-                  <h4 className="font-bold text-slate-900 text-base leading-snug">
+                  <h4 className="font-bold text-slate-900 text-sm sm:text-base leading-snug">
                     {sermon.title}
                   </h4>
                   {sermon.series && (
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">
                       Series: {sermon.series}
                     </p>
                   )}
-                  <p className="text-xs text-slate-600 mt-1 font-medium">
+                  <p className="text-[11px] sm:text-xs text-slate-600 mt-1 font-medium">
                     <span className="text-slate-400 font-normal">Preacher: </span>
                     {sermon.preacher || "Pastor"}
                   </p>
@@ -91,14 +91,14 @@ export default function SermonsTable({ sermons = [], onEdit, onDelete, onCreateN
                   <button
                     type="button"
                     onClick={() => onEdit(sermon)}
-                    className="flex-1 py-2 text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 text-center transition-all"
+                    className="flex-1 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 text-center transition-all"
                   >
                     Edit
                   </button>
                   <button
                     type="button"
                     onClick={() => onDelete(sermon.id)}
-                    className="flex-1 py-2 text-xs font-semibold text-red-600 bg-red-50/50 border border-red-100 rounded-lg hover:bg-red-100 text-center transition-all"
+                    className="flex-1 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-red-600 bg-red-50/50 border border-red-100 rounded-lg hover:bg-red-100 text-center transition-all"
                   >
                     Delete
                   </button>
@@ -108,7 +108,7 @@ export default function SermonsTable({ sermons = [], onEdit, onDelete, onCreateN
           </div>
 
           {/* DESKTOP VIEW: Full Data Table (Hidden on mobile, visible on desktop md+) */}
-          <div className="hidden md:block">
+          <div className="hidden xl:block">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50/80 border-b border-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-500">

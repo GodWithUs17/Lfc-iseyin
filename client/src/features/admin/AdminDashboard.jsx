@@ -235,14 +235,16 @@ export default function AdminDashboard() {
         return (
           <AdminManagement
             admins={admin.admins || []}
-            onAddAdmin={admin.register}
+            adminsError={admin.adminsError}
+            currentUser={admin.currentUser}
+            onAddAdmin={admin.createAdmin}
             onDeleteAdmin={admin.deleteAdmin}
           />
         );
       default:
         return (
           <OverviewTab
-            summary={summary}
+            summary={admin.summary}
             events={admin.events}
             sermons={admin.sermons}
             messages={admin.messages}

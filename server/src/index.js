@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 const sermonsRouter = require('./routes/sermon');
 const liveRouter = require('./routes/live');
 const eventsRouter = require('./routes/events');
@@ -23,6 +24,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/admins', adminRouter);
 app.use('/api/sermons', sermonsRouter);
 app.use('/api/live', liveRouter);
 app.use('/api/events', eventsRouter);

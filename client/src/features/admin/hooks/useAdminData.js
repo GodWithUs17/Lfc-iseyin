@@ -107,6 +107,7 @@ export default function useAdminData() {
 
   // Admin and Staff Management State
   const [admins, setAdmins] = useState([]);
+  const [adminsError, setAdminsError] = useState("");
 
   const [messages, setMessages] = useState(() => {
     try {
@@ -208,7 +209,19 @@ export default function useAdminData() {
 
         if (adminsResponse.ok) {
           const payload = await adminsResponse.json();
-          setAdmins(Array.isArray(payload) ? payload : []);
+          if (Array.isArray(payload)) {
+            setAdmins(payload);
+            setAdminsError("");
+          } else {
+            setAdminsError("The admin accounts response was invalid.");
+          }
+        } else {
+          let errorMessage = `Unable to load admin accounts (HTTP ${adminsResponse.status}).`;
+          if (adminsResponse.headers.get("content-type")?.includes("application/json")) {
+            const payload = await adminsResponse.json();
+            errorMessage = payload.error || payload.message || errorMessage;
+          }
+          setAdminsError(errorMessage);
         }
       } catch {
         if (!active) return;
@@ -219,6 +232,7 @@ export default function useAdminData() {
         setSermons(Array.isArray(savedSermons) ? savedSermons.map(normalizeSermon).filter(Boolean) : []);
         setEvents(Array.isArray(savedEvents) ? savedEvents.map(normalizeEvent).filter(Boolean) : []);
         setMessages(Array.isArray(savedMessages) ? savedMessages : []);
+        setAdminsError("Unable to load admin accounts.");
       }
     };
 
@@ -313,10 +327,12 @@ export default function useAdminData() {
       setAuthed(true);
       setCurrentUser(payload.user);
       setPass("");
-      await Promise.all([refreshEvents(), refreshSermons(), refreshAdmins(), refreshMessages()]);
+      await Promise.allSettled([refreshEvents(), refreshSermons(), refreshAdmins(), refreshMessages()]);
+      return true;
     } catch (error) {
       setErr(true);
       setErrMessage(error.message || "Login failed.");
+      return false;
     }
   };
 
@@ -357,12 +373,28 @@ export default function useAdminData() {
   const refreshAdmins = async () => {
     try {
       const response = await apiRequest("/api/admins");
-      if (!response.ok) return [];
+      if (!response.ok) {
+        let errorMessage = `Unable to load admin accounts (HTTP ${response.status}).`;
+        if (response.headers.get("content-type")?.includes("application/json")) {
+          const payload = await response.json();
+          errorMessage = payload.error || payload.message || errorMessage;
+        }
+        setAdminsError(errorMessage);
+        return [];
+      }
+
       const payload = await response.json();
-      const list = Array.isArray(payload) ? payload : [];
+      if (!Array.isArray(payload)) {
+        setAdminsError("The admin accounts response was invalid.");
+        return [];
+      }
+
+      const list = payload;
       setAdmins(list);
+      setAdminsError("");
       return list;
-    } catch {
+    } catch (error) {
+      setAdminsError(error instanceof Error ? error.message : "Unable to load admin accounts.");
       return [];
     }
   };
@@ -628,6 +660,7 @@ const saveLiveSettings = async (payload) => {
     tab,
     setTab,
     admins,
+    adminsError,
     messages,
     setMessages,
     refreshMessages,

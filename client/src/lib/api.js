@@ -1,9 +1,8 @@
 import { STORAGE_KEYS } from '@/config/constants';
 
-// Automatically points to localhost when running `npm run dev`, 
-// and points to Render when built for Vercel/Production.
-export const API_BASE_URL = import.meta.env.DEV 
-  ? 'http://localhost:5001' 
+// In development, let Vite proxy same-origin /api requests to the local server.
+export const API_BASE_URL = import.meta.env.DEV
+  ? ''
   : 'https://lfc-iseyin.onrender.com';
 
 export async function apiRequest(path, options = {}) {
