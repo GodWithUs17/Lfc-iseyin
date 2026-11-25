@@ -1,7 +1,7 @@
 // src/components/admin/MessagesTab.jsx
 import React, { useState } from "react";
 
-export default function MessagesTab({ messages = [], toggleMessageRead, onToggleRead }) {
+export default function MessagesTab({ messages = [], loadError = "", toggleMessageRead, onToggleRead }) {
   const [filter, setFilter] = useState("ALL");
 
   const handleToggleRead = (id, currentStatus) => {
@@ -105,6 +105,11 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
 
       {/* Message List */}
       <div className="space-y-3 p-3 sm:space-y-0 sm:p-0 sm:divide-y sm:divide-slate-100">
+        {loadError && filteredMessages.length > 0 && (
+          <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs text-red-700 sm:mx-4 sm:mt-4 sm:text-sm">
+            Could not refresh messages: {loadError}
+          </div>
+        )}
         {filteredMessages.length === 0 ? (
           <div className="px-3 py-10 text-center sm:px-6 sm:py-16">
             <div className="mx-auto mb-2 grid h-9 w-9 place-items-center rounded-full bg-slate-100 text-slate-400">
@@ -112,8 +117,8 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 10h8M8 14h5m-8 6 2.5-2H18a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v13z" />
               </svg>
             </div>
-            <p className="text-sm font-semibold text-slate-700">No messages found</p>
-            <p className="mt-1 text-xs text-slate-500">New prayer and contact requests will appear here.</p>
+            <p className="text-sm font-semibold text-slate-700">{loadError ? "Messages could not be loaded" : "No messages found"}</p>
+            <p className="mt-1 text-xs text-slate-500">{loadError || "New prayer and contact requests will appear here."}</p>
           </div>
         ) : (
           filteredMessages.map((msg, index) => {

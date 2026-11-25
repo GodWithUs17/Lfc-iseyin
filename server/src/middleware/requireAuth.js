@@ -27,7 +27,12 @@ module.exports.requireRole = function requireRole(...allowedRoles) {
       return res.status(401).json({ message: 'Authentication required.' });
     }
 
-    if (!allowedRoles.includes(req.user.role)) {
+    const userRole = String(req.user.role || '').trim().toUpperCase();
+    const hasAllowedRole = allowedRoles.some(
+      (role) => String(role).trim().toUpperCase() === userRole
+    );
+
+    if (!hasAllowedRole) {
       return res.status(403).json({ message: 'You do not have permission to perform this action.' });
     }
 

@@ -228,6 +228,7 @@ export default function AdminDashboard() {
         return (
           <MessagesTab
             messages={admin.messages}
+            loadError={admin.messagesError}
             toggleMessageRead={admin.toggleMessageRead}
           />
         );

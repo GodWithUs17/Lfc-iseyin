@@ -116,6 +116,7 @@ export default function useAdminData() {
       return [];
     }
   });
+  const [messagesError, setMessagesError] = useState("");
 
   const [sermons, setSermons] = useState(() => {
     try {
@@ -202,9 +203,20 @@ export default function useAdminData() {
 
         if (messagesResponse.ok) {
           const payload = await messagesResponse.json();
-          const list = Array.isArray(payload) ? payload : [];
-          setMessages(list);
-          localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(list));
+          if (Array.isArray(payload)) {
+            setMessages(payload);
+            setMessagesError("");
+            localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(payload));
+          } else {
+            setMessagesError("The messages response was invalid.");
+          }
+        } else {
+          let errorMessage = `Unable to load messages (HTTP ${messagesResponse.status}).`;
+          if (messagesResponse.headers.get("content-type")?.includes("application/json")) {
+            const payload = await messagesResponse.json();
+            errorMessage = payload.error || payload.message || errorMessage;
+          }
+          setMessagesError(errorMessage);
         }
 
         if (adminsResponse.ok) {
@@ -223,7 +235,7 @@ export default function useAdminData() {
           }
           setAdminsError(errorMessage);
         }
-      } catch {
+      } catch (error) {
         if (!active) return;
 
         const savedSermons = JSON.parse(localStorage.getItem("LFC_SERMONS") || "[]");
@@ -232,6 +244,7 @@ export default function useAdminData() {
         setSermons(Array.isArray(savedSermons) ? savedSermons.map(normalizeSermon).filter(Boolean) : []);
         setEvents(Array.isArray(savedEvents) ? savedEvents.map(normalizeEvent).filter(Boolean) : []);
         setMessages(Array.isArray(savedMessages) ? savedMessages : []);
+        setMessagesError(error instanceof Error ? error.message : "Unable to load messages.");
         setAdminsError("Unable to load admin accounts.");
       }
     };
@@ -263,13 +276,29 @@ export default function useAdminData() {
   const refreshMessages = async () => {
     try {
       const response = await apiRequest("/api/contact/messages");
-      if (!response.ok) return messages;
+      if (!response.ok) {
+        let errorMessage = `Unable to load messages (HTTP ${response.status}).`;
+        if (response.headers.get("content-type")?.includes("application/json")) {
+          const payload = await response.json();
+          errorMessage = payload.error || payload.message || errorMessage;
+        }
+        setMessagesError(errorMessage);
+        return messages;
+      }
+
       const payload = await response.json();
-      const list = Array.isArray(payload) ? payload : [];
+      if (!Array.isArray(payload)) {
+        setMessagesError("The messages response was invalid.");
+        return messages;
+      }
+
+      const list = payload;
       setMessages(list);
+      setMessagesError("");
       localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(list));
       return list;
-    } catch {
+    } catch (error) {
+      setMessagesError(error instanceof Error ? error.message : "Unable to load messages.");
       return messages;
     }
   };
@@ -662,6 +691,7 @@ const saveLiveSettings = async (payload) => {
     admins,
     adminsError,
     messages,
+    messagesError,
     setMessages,
     refreshMessages,
     toggleMessageRead,

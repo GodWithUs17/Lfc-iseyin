@@ -5,8 +5,8 @@ const contactController = require('./contact.controller');
 
 const router = express.Router();
 
-router.get('/', requireAuth, requireRole('admin'), contactController.listMessages);
+router.get('/messages', requireAuth, requireRole('admin'), contactController.listMessages);
 router.post('/', contactController.createMessage);
-router.patch('/messages/:id/read', contactController.toggleReadStatus);
+router.patch('/messages/:id/read', requireAuth, requireRole('admin'), contactController.toggleReadStatus);
 
 module.exports = router;

@@ -43,26 +43,50 @@ export default function Contact({ data }) {
 
     setStatus({ show: true, text: '⏳ Sending...', color: 'text-winners-red' });
 
-    const existing = JSON.parse(localStorage.getItem('lfc_messages') || '[]');
-    existing.push(payload);
-    localStorage.setItem('lfc_messages', JSON.stringify(existing));
-
-    const formspreeUrl = data?.formSettings?.formspreeUrl;
-    const sheetUrl = data?.formSettings?.googleSheetUrl;
-    const whatsapp = data?.formSettings?.whatsappNumber || '2348031234567';
-
-    const promises = [
-      apiRequest('/api/contact', {
+    let response;
+    try {
+      response = await apiRequest('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify(payload),
-      }).catch((error) => {
-        console.error('Contact API request failed:', error);
-      }),
-    ];
+      });
+    } catch (error) {
+      console.error('Contact API request failed:', error);
+      setStatus({ show: true, text: 'Unable to send your message right now. Please try again.', color: 'text-red-600' });
+      return;
+    }
+
+    if (!response.ok) {
+      let errorMessage = `Unable to send your message (HTTP ${response.status}).`;
+      if (response.headers.get('content-type')?.includes('application/json')) {
+        try {
+          const responsePayload = await response.json();
+          errorMessage = responsePayload.message || responsePayload.error || errorMessage;
+        } catch {
+          // Keep the status-based message when the server response is not valid JSON.
+        }
+      }
+      setStatus({ show: true, text: errorMessage, color: 'text-red-600' });
+      return;
+    }
+
+    try {
+      const existing = JSON.parse(localStorage.getItem('lfc_messages') || '[]');
+      if (Array.isArray(existing)) {
+        existing.push(payload);
+        localStorage.setItem('lfc_messages', JSON.stringify(existing));
+      }
+    } catch (error) {
+      console.error('Unable to cache contact message locally:', error);
+    }
+
+    const formspreeUrl = data?.formSettings?.formspreeUrl;
+    const sheetUrl = data?.formSettings?.googleSheetUrl;
+    const whatsapp = data?.formSettings?.whatsappNumber || '2348031234567';
+    const promises = [];
 
     if (formspreeUrl) {
       promises.push(fetch(formspreeUrl, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) }).catch(() => {}));
