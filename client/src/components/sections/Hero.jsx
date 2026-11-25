@@ -87,19 +87,11 @@ export default function Hero({ data }) {
           <div className="order-2 lg:order-1 py-2 sm:py-6 lg:py-12">
             <Badge className="hero-enter hero-badge gap-2 bg-white border-rose-100 shadow-sm">
               <span className="w-[18px] h-[18px] rounded-full bg-rose-50 border border-rose-200 grid place-items-center p-[1px]">
-                <svg viewBox="0 0 200 200" className="w-full h-full">
-                  <circle cx="100" cy="108" r="78" fill="#C41E3A" />
-                  <circle cx="100" cy="108" r="52" fill="white" />
-                  <ellipse
-                    cx="100"
-                    cy="108"
-                    rx="22"
-                    ry="52"
-                    fill="none"
-                    stroke="#C41E3A"
-                    strokeWidth="4"
-                  />
-                </svg>
+                <img
+                  src={WinnersLogo}
+                  alt="Winners Chapel logo"
+                  className="w-full h-full object-contain"
+                />
               </span>
               Liberation Mandate • Est. 1981
             </Badge>
