@@ -71,7 +71,7 @@ export default function Sermons({ data }) {
       <div className="max-w-[1280px] mx-auto px-3.5 sm:px-6">
         
         {/* Header Bar */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2.5 sm:gap-4 mb-5 sm:mb-8">
+        <div data-reveal="up" className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2.5 sm:gap-4 mb-5 sm:mb-8">
           <div>
             <div className="inline-flex bg-rose-50 text-winners-red px-2.5 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase">
               Media & Messages
@@ -95,7 +95,7 @@ export default function Sermons({ data }) {
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-4 sm:gap-6 lg:gap-8 items-start">
           
           {/* Main Video Player Container */}
-          <div id="live" className="w-full bg-slate-900 rounded-[18px] xs:rounded-[22px] sm:rounded-[28px] p-3 xs:p-4 sm:p-5 lg:p-6 text-white relative overflow-hidden shadow-xl border border-slate-800">
+          <div id="live" data-reveal="left" className="w-full bg-slate-900 rounded-[18px] xs:rounded-[22px] sm:rounded-[28px] p-3 xs:p-4 sm:p-5 lg:p-6 text-white relative overflow-hidden shadow-xl border border-slate-800">
             {/* Background Glow */}
             <div className="absolute inset-0 bg-[radial-gradient(500px_at_0%_0%,rgba(225,29,72,0.2),transparent)] pointer-events-none" />
 
@@ -190,7 +190,7 @@ export default function Sermons({ data }) {
           </div>
 
           {/* Right Sermon Playlist Container */}
-          <div className="w-full flex flex-col gap-2.5 sm:gap-3">
+          <div data-reveal="right" className="w-full flex flex-col gap-2.5 sm:gap-3">
             
             {/* Mobile Playlist Header */}
             <div className="flex justify-between items-center sm:hidden px-1">

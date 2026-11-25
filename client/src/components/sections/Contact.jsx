@@ -103,7 +103,7 @@ export default function Contact({ data }) {
   return (
     <section id="contact" className="py-12 sm:py-16 lg:py-[100px] bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-12">
-        <div>
+        <div data-reveal="left">
           
           <div className="max-w-[720px] mx-auto text-center mb-8 sm:mb-12 lg:mb-14">
             <div className="inline-flex bg-rose-50 text-winners-red px-3 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase">Get in Touch</div>
@@ -123,7 +123,7 @@ export default function Contact({ data }) {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-[#FFFBFB] border border-rose-100 rounded-[20px] sm:rounded-[24px] p-4 sm:p-6 lg:p-8">
+        <form data-reveal="right" onSubmit={handleSubmit} className="bg-[#FFFBFB] border border-rose-100 rounded-[20px] sm:rounded-[24px] p-4 sm:p-6 lg:p-8">
           <div className="grid sm:grid-cols-2 gap-4">
             <div><label className="block font-semibold text-[12px] sm:text-[13px] mb-1.5 sm:mb-2 text-slate-900">Full Name *</label><input name="name" required placeholder="Your name" className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl border border-rose-100 bg-white focus:outline-none focus:border-winners-red focus:ring-4 focus:ring-rose-50 text-[14px] transition" /></div>
             <div><label className="block font-semibold text-[12px] sm:text-[13px] mb-1.5 sm:mb-2 text-slate-900">Phone / WhatsApp *</label><input name="phone" required placeholder="080..." className="w-full px-3.5 sm:px-4 py-3 sm:py-3.5 rounded-xl border border-rose-100 bg-white focus:outline-none focus:border-winners-red focus:ring-4 focus:ring-rose-50 text-[14px] transition" /></div>

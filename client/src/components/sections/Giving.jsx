@@ -46,7 +46,7 @@ export default function Giving() {
       <div className="max-w-[1280px] mx-auto px-3 sm:px-6 grid lg:grid-cols-[1.1fr_0.9fr] gap-5 sm:gap-8 lg:gap-12 items-center">
         
         {/* Left Info Column */}
-        <div>
+        <div data-reveal="left">
           <div className="inline-flex bg-rose-50 text-winners-red px-3 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase">
             Kingdom Partnership
           </div>
@@ -76,7 +76,7 @@ export default function Giving() {
         </div>
 
         {/* Right Ways To Give Card */}
-        <div className="bg-white rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 lg:p-8 border border-rose-100 shadow-[0_20px_60px_-20px_rgba(15,23,42,0.12)] max-w-full overflow-hidden">
+        <div data-reveal="right" className="bg-white rounded-[20px] sm:rounded-[28px] p-4 sm:p-6 lg:p-8 border border-rose-100 shadow-[0_20px_60px_-20px_rgba(15,23,42,0.12)] max-w-full overflow-hidden">
           <h3 className="font-fraunces text-[18px] sm:text-[22px] mb-4 sm:mb-5">Bank Accounts & Ways to Give</h3>
 
           {/* Account Lists */}

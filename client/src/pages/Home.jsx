@@ -17,10 +17,9 @@ import Location from "@/components/sections/Location";
 import Giving from "@/components/sections/Giving";
 import Contact from "@/components/sections/Contact";
 import useSiteData from "@/hooks/useSiteData";
-import { useEffect } from "react";
+import useScrollReveal from "@/hooks/useScrollReveal";
 import { useGlobalSmoothScroll } from "@/hooks/useSmoothScroll";
 import { ScrollProgress, BackToTop } from "@/components/ui/ScrollProgress";
-
 
 // export default function Home() {
 //   const { data } = useSiteData();
@@ -29,64 +28,14 @@ export default function Home() {
   const { data } = useSiteData();
 
   useGlobalSmoothScroll(88);
- 
-  
-  
-useEffect(() => {
-  const sections = document.querySelectorAll("main > section");
+  useScrollReveal(); // Reveal animations for elements with data-reveal attribute
 
-  const showSectionsImmediately = () => {
-    sections.forEach((section, index) => {
-      if (index !== 0) {
-        section.classList.remove("motion-reveal");
-        section.classList.add("motion-visible");
-      }
-    });
-  };
-
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    showSectionsImmediately();
-    return;
-  }
-
-  if (!("IntersectionObserver" in window)) {
-    showSectionsImmediately();
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("motion-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: "0px 0px -40px 0px",
-    }
-  );
-
-  sections.forEach((section, index) => {
-    if (index === 0) return;
-
-    section.classList.add("motion-reveal");
-    observer.observe(section);
-  });
-
-  return () => observer.disconnect();
-}, []);
-
-
-  
   return (
     // ❌ REMOVED overflow-x-hidden FROM THIS DIV
     <div className="min-h-screen bg-[#FFFBFB]">
       <ScrollProgress />
       <Header />
-      
+
       {/* ✅ MOVED overflow-x-hidden HERE TO PROTECT PAGE CONTENT WITHOUT BREAKING HEADER */}
       <main className="overflow-x-hidden">
         <Hero data={data} />

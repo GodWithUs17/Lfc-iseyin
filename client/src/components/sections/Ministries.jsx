@@ -20,15 +20,15 @@ export default function Ministries() {
   return (
     <section id="ministries" className="py-12 sm:py-16 lg:py-[100px] bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-        <div className="max-w-[720px] mx-auto text-center mb-8 sm:mb-12 lg:mb-14">
+        <div data-reveal="up" className="max-w-[720px] mx-auto text-center mb-8 sm:mb-12 lg:mb-14">
           <div className="inline-flex bg-rose-50 text-winners-red px-3 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase mb-3">Family & Growth</div>
           <h2 className="font-fraunces text-[24px] sm:text-[32px] lg:text-[42px] leading-[1.1]">A place for everyone</h2>
           <p className="text-slate-500 text-[14px] sm:text-[16px] lg:text-[17px] mt-3 leading-relaxed">From children to youth, singles to married - vibrant ministry to nurture your faith at every stage.</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-[22px]">
-          {ministries.map(m => (
-            <div key={m.title} className="group rounded-[16px] sm:rounded-[20px] overflow-hidden border border-slate-100 bg-[#FFFBFB] hover:-translate-y-1 hover:shadow-[0_20px_60px_-20px_rgba(15,23,42,0.12)] hover:bg-white transition-all duration-300">
+          {ministries.map((m, index) => (
+            <div key={m.title} data-reveal="scale" style={{ "--reveal-delay": `${index * 80}ms` }} className="group rounded-[16px] sm:rounded-[20px] overflow-hidden border border-slate-100 bg-[#FFFBFB] hover:-translate-y-1 hover:shadow-[0_20px_60px_-20px_rgba(15,23,42,0.12)] hover:bg-white transition-all duration-300">
               <div className="h-[180px] sm:h-[200px] bg-rose-100 relative overflow-hidden">
                 <img src={m.img} alt={m.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent"></div>

@@ -80,10 +80,10 @@ export default function Events({ data }) {
   const visibleEvents = showAll ? events : events.slice(0, 3);
 
   return (
-    <section id="events" className="py-12 sm:py-16 lg:py-[100px] bg-white">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+    <section id="events" className="py-12 sm:py-16 `lg:py-25` bg-white">
+      <div className=" `max-w-7xl` mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sm:mb-10">
+        <div data-reveal="up" className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sm:mb-10">
           <div className="flex flex-col items-start gap-2 sm:gap-2.5 max-w-xl">
             <span className="inline-block bg-rose-50 text-winners-red px-3 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase">
               Calendar
@@ -109,14 +109,16 @@ export default function Events({ data }) {
           <p className="text-center text-slate-500 py-12 text-[15px]">No upcoming events scheduled right now.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-            {visibleEvents.map((ev) => (
+            {visibleEvents.map((ev, index) => (
               <div 
                 key={ev.id} 
-                className="group flex flex-col justify-between border border-rose-100 rounded-[16px] sm:rounded-[20px] overflow-hidden bg-white hover:shadow-[0_20px_60px_-20px_rgba(15,23,42,0.12)] hover:-translate-y-0.5 hover:border-rose-200 transition-all duration-300"
+                data-reveal="up"
+                style={{ "--reveal-delay": `${index * 90}ms` }}
+                className="group flex flex-col justify-between border border-rose-100 `rounded-2xl` sm:rounded-[20px] overflow-hidden bg-white hover:shadow-[0_20px_60px_-20px_rgba(15,23,42,0.12)] hover:-translate-y-0.5 hover:border-rose-200 transition-all duration-300"
               >
                 {/* Dynamic Black / Red Top Banner */}
                 <div className={`flex items-center gap-2.5 text-white px-4 py-3 font-bold text-[13px] sm:text-[14px] ${ev.color === 'red' ? 'bg-winners-red' : 'bg-slate-900'}`}>
-                  <b className="bg-white text-slate-900 w-8 h-8 sm:w-9 sm:h-9 grid place-items-center rounded-[8px] sm:rounded-[10px] font-fraunces text-[14px] sm:text-[16px] shrink-0">
+                  <b className="bg-white text-slate-900 w-8 h-8 sm:w-9 sm:h-9 grid place-items-center rounded-lg sm:rounded-[10px] font-fraunces text-[14px] sm:text-[16px] shrink-0">
                     {ev.day}
                   </b>
                   <span className="truncate text-[12px] sm:text-[14px]">{ev.monthYear}</span>

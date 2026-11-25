@@ -2,7 +2,7 @@
  * Pastor Section - Living Faith Church Iseyin
  * Responsive, data-driven, reusable
  */
-import WinnersLogo from '@/components/brand/WINNER.webp';
+import WinnersLogo from '@/components/brand/WINNER.webpzzz';
 import pastorImage from '@/components/brand/ResidentPastor.webp';
 
 export default function Pastor() {
@@ -12,7 +12,7 @@ export default function Pastor() {
       
       <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 grid lg:grid-cols-[0.9fr_1.1fr] gap-8 lg:gap-16 items-center">
         {/* Image */}
-        <div className="relative order-2 lg:order-1">
+        <div data-reveal="left" className="relative order-2 lg:order-1">
           <div className="rounded-[20px] sm:rounded-[28px] overflow-hidden aspect-[4/5] sm:aspect-[4/5] max-w-[400px] mx-auto lg:max-w-none border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] bg-slate-800">
             <img src={pastorImage} alt="Resident Pastor - LFC Iseyin" className="w-full h-full object-cover" loading="lazy" />
           </div>
@@ -27,7 +27,7 @@ export default function Pastor() {
         </div>
 
         {/* Content */}
-        <div className="order-1 lg:order-2">
+        <div data-reveal="right" className="order-1 lg:order-2">
           <div className="inline-flex items-center gap-2 bg-white/10 text-rose-200 border border-white/10 px-3 sm:px-3.5 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase">
             <img 
                 src={pastorImage} 
