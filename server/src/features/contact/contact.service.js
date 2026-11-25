@@ -2,6 +2,8 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 const fallbackMessages = [];
+const NIGERIAN_PHONE_PATTERN = /^(?:0[789]\d{9}|\+234[789]\d{9})$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 async function listMessages() {
   if (!process.env.DATABASE_URL) {
@@ -47,6 +49,20 @@ async function createMessage(payload) {
     return {
       status: 400,
       payload: { message: 'Name, phone, and message are required.' },
+    };
+  }
+
+  if (!NIGERIAN_PHONE_PATTERN.test(phone)) {
+    return {
+      status: 400,
+      payload: { message: 'Enter a valid Nigerian phone number.' },
+    };
+  }
+
+  if (email && !EMAIL_PATTERN.test(email)) {
+    return {
+      status: 400,
+      payload: { message: 'Enter a valid email address or leave the email field blank.' },
     };
   }
 

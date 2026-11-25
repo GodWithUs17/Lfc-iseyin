@@ -80,7 +80,7 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl text-[11px] sm:text-xs font-medium self-start sm:self-auto flex-wrap">
+        <div className="flex w-full max-w-full items-center gap-1 overflow-x-auto rounded-xl bg-slate-200/60 p-1 text-[11px] sm:w-auto sm:text-xs font-medium self-stretch sm:self-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {[
             { key: "ALL", label: "All Messages" },
             { key: "PRAYER", label: "Prayer" },
@@ -91,7 +91,7 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
               key={tab.key}
               type="button"
               onClick={() => setFilter(tab.key)}
-              className={`px-2 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              className={`shrink-0 whitespace-nowrap px-2.5 sm:px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                 filter === tab.key
                   ? "bg-white text-slate-900 shadow-sm font-semibold"
                   : "text-slate-600 hover:text-slate-900"
@@ -104,10 +104,16 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
       </div>
 
       {/* Message List */}
-      <div className="divide-y divide-slate-100">
+      <div className="space-y-3 p-3 sm:space-y-0 sm:p-0 sm:divide-y sm:divide-slate-100">
         {filteredMessages.length === 0 ? (
-          <div className="py-16 text-center">
-            <p className="text-sm font-medium text-slate-600">No messages found</p>
+          <div className="px-3 py-10 text-center sm:px-6 sm:py-16">
+            <div className="mx-auto mb-2 grid h-9 w-9 place-items-center rounded-full bg-slate-100 text-slate-400">
+              <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 10h8M8 14h5m-8 6 2.5-2H18a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v13z" />
+              </svg>
+            </div>
+            <p className="text-sm font-semibold text-slate-700">No messages found</p>
+            <p className="mt-1 text-xs text-slate-500">New prayer and contact requests will appear here.</p>
           </div>
         ) : (
           filteredMessages.map((msg, index) => {
@@ -119,7 +125,7 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
             return (
               <div
                 key={id}
-                className={`p-3 sm:p-6 transition-colors hover:bg-slate-50/80 ${
+                className={`rounded-xl border border-slate-200 p-3 shadow-xs transition-colors hover:bg-slate-50/80 sm:rounded-none sm:border-0 sm:p-6 sm:shadow-none ${
                   !isRead ? "bg-slate-50/40" : "bg-white"
                 }`}
               >
@@ -190,7 +196,7 @@ export default function MessagesTab({ messages = [], toggleMessageRead, onToggle
                 </div>
 
                 {/* Subject & Message Content */}
-                <div className="pl-5 border-l-2 border-slate-200 ml-1 space-y-1">
+                <div className="pl-4 sm:pl-5 border-l-2 border-slate-200 ml-1 space-y-1">
                   <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">
                     {msg.type || "Contact Message"}
                   </p>
